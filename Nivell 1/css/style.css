@@ -1,0 +1,21 @@
+body {
+    background-color: rgb(139, 199, 218);
+}
+
+#formcard {
+    width: 350px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#formcard input {
+    margin-bottom: 10px;
+}
+
+.btn-default {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid purple;
+    background-color: purple;
+    color: white;
+}

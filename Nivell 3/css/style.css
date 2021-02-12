@@ -1,0 +1,49 @@
+body {
+    background-color: rgb(139, 199, 218);
+}
+
+.container {
+    background-color: rgb(81, 131, 160);
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#areaNotificacions {
+    height: 50px;
+    border-radius: 3px;
+    background-color: rgb(83, 182, 83);
+    padding-left: 20px;
+    color: white;
+    position: relative;
+}
+
+#btnBorra {
+    position: absolute;
+    right: 10px;
+}
+
+
+#formcard, #productList {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#formcard input {
+    margin-bottom: 10px;
+}
+
+.btn-default {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid purple;
+    background-color: purple;
+    color: white;
+}
+
+.prod {
+    border: 1px solid black; 
+    border-radius: 3px; 
+    padding: 10px 5px;
+    background-color: white
+}
