@@ -19,6 +19,14 @@ export class Product {
         return this.date;
     }
 
+    get Id() {
+        return this.id;
+    }
+
+    get Code() {
+        return this.code;
+    }
+
     set Name(newName) {
         this.name = newName;
     }
@@ -29,6 +37,10 @@ export class Product {
 
     set Date(newDate) {
         this.date = newDate;    
+    }
+
+    set Code(newCode) {
+        this.code = newCode;
     }
 
     Validate() {
@@ -52,7 +64,7 @@ export class Product {
         }
 
         if(validation == false) {
-            this.Notificar(missatgeA + missatgeB + missatgeC, true);
+            this.Notificar(missatgeA + missatgeB + missatgeC, "danger");
         }
         return validation;
     }
@@ -62,10 +74,9 @@ export class Product {
         let codigo = '<div class="d-flex justify-content-between mb-1 prod" id="' + this.id +'">';
         codigo += '<div class="d-flex align-items-center flex-wrap">';
         codigo += `<div class="mr-2"><span class="font-weight-bold">Product name:</span> ${this.name}</div>`;
-        codigo += `<div class="mr-2"><span class="font-weight-bold">Product Price:</span> ${this.price}</div>`;
-        codigo += `<div><span class="font-weight-bold">Product Date:</span> ${this.date}</div></div>`;
+        codigo += `<div class="mr-2"><span class="font-weight-bold">Product Price:</span> <span id="p${this.id}">${this.price}</span></div>`;
+        codigo += `<div><span class="font-weight-bold">Product Date:</span> <span id="d${this.id}">${this.date}</span></div></div>`;
         codigo += '<div class="d-flex align-items-center">';
-        // codigo += '<button type="button" class="btn btn-danger" id="b' + this.id +'">Delete</button></div>';
         codigo += `<button type="button" class="btn btn-danger" id="b${this.id}">Delete</button></div>`;
 
         return codigo;
@@ -74,7 +85,7 @@ export class Product {
     AddToList() {
         // S'afegeix el producte a la llista de productes
         productList.insertAdjacentHTML("beforeend", this.code);
-        this.Notificar(`S'ha creat el producte: ${this.name}`, false);
+        this.Notificar(`S'ha creat el producte: ${this.name}`, "success");
     }
 
     RemoveFromList() {
@@ -82,24 +93,24 @@ export class Product {
         let father = document.getElementById("productList");
         let son = document.getElementById(this.id);
         father.removeChild(son);
-        this.Notificar(`S'ha eliminat el producte: ${this.name}`, false);
+        this.Notificar(`S'ha eliminat el producte: ${this.name}`, "danger");
     }
 
-    Notificar(missatge, err) {
+    Update() {
+        document.getElementById("p" + this.id).innerText = this.price;
+        document.getElementById("d" + this.id).innerText = this.date;
+        this.Notificar(`S'ha actualitzat el producte: ${this.name}`, "success");
+    }
+
+    Notificar(missatge, classe) {
         /*
             missatge - El missatge a notificar
-            err      - true si és un error, false si es un avís
+            classe   - La classe bootstrap aplicar a la notificació
         */
-        let type = "";
-
-        if(err) {
-            areaNotificacions.style.backgroundColor = "red";
-            type = "<span class='material-icons mr-1'>report_problem</span>";
-        } else {
-            areaNotificacions.style.backgroundColor = "rgb(83, 182, 83)";
-            type = "<span class='material-icons'>info</span>";
-        }
-        notificacio.innerHTML = type + "<span class='ml-2'>" + missatge + "</span>";
+       areaNotificacions.innerHTML = `<div class="alert ` + `alert-${classe}` + ` alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        ${missatge}
+                      </div>`;
 
     }
 }

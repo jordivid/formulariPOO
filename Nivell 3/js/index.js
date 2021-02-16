@@ -5,7 +5,6 @@ var objectes = new Map(); // Contenidor pels objectes Product
 var indiceId = 0;         // Comptador incremental pels id de productes
 
 btnEnviar.addEventListener("click", enviar);
-btnBorra.addEventListener("click", borrarNotificacio);
 
 function inicialitzar() {
     // Inicialització del formulari
@@ -33,18 +32,44 @@ function borrarNotificacio() {
 
 function enviar(e) {
     // Es crea l'objecte Product, es valida i s'afegeix a la llista de productes
-    let producte = new Product(product.value.trim(), price.value, fecha.value, "p" + (indiceId + 1));
+    let producte;
     let validation;
+    let key;
+    let exist = false;
+    let nom = product.value.trim();
     
-    // notificacio.innerHTML = "";
-    // areaNotificacions.css("backgroundColor") = "rgb(83, 182, 83)";
+    if(nom != "") {
+        for (let [clau, dades] of objectes) {
+            if(dades.Name.toLowerCase() == nom.toLowerCase()) {
+                producte = dades;
+                producte.Price = price.value;
+                producte.Date = fecha.value;
+                producte.Code = producte.generateCode;
+                exist = true;
+                break;
+            }
+        }
+    }
+
+    if(exist == false) {
+        producte = new Product(product.value.trim(), price.value, fecha.value, "p" + (indiceId + 1));
+    }
+
     validation = producte.Validate();
+
     if(validation == false) {
         if(product.value.trim() == "") {
             product.focus();
         } else {
             price.focus();
         }
+        return;
+    }
+
+    if(exist == true) {
+        objectes.set("b" + producte.id, producte);
+        producte.Update();
+        inicialitzar();
         return;
     }
 
